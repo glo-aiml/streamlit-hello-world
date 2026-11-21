@@ -3,18 +3,6 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 
-st.title("Financial Analysis Web App")
-
-# User inputs
-tickers = st.text_input("Enter stock tickers (comma separated)", "AAPL, MSFT,
-GOOG").split(",")
-tickers = [ticker.strip() for ticker in tickers]
-start_date = st.date_input("Start Date", pd.to_datetime("2020-01-01"))
-end_date = st.date_input("End Date", pd.to_datetime("2023-01-01"))
-# Fetch stock data
-stock_data = fetch_data(tickers, start_date, end_date)
-returns_data = stock_data.pct_change().dropna()
-
 def fetch_data(tickers, start_date, end_date):
   data_frames = []
   for tickers in tickers:
@@ -38,6 +26,19 @@ def calculate_sortino_ratio(returns, risk_free_rate=0.02):
 
 def portfolio_optimization(returns):
   return np.ones(len(returns.columns)) / len(returns.columns)
+
+st.title("Financial Analysis Web App")
+
+# User inputs
+tickers = st.text_input("Enter stock tickers (comma separated)", "AAPL, MSFT,
+GOOG").split(",")
+tickers = [ticker.strip() for ticker in tickers]
+start_date = st.date_input("Start Date", pd.to_datetime("2020-01-01"))
+end_date = st.date_input("End Date", pd.to_datetime("2023-01-01"))
+
+# Fetch stock data
+stock_data = fetch_data(tickers, start_date, end_date)
+returns_data = stock_data.pct_change().dropna()
            
 # Visualizations
 st.subheader("Stock Prices")
