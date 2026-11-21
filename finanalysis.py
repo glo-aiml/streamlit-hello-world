@@ -5,7 +5,7 @@ import numpy as np
 
 def fetch_data(tickers, start_date, end_date):
   data_frames = []
-  for tickers in tickers:
+  for ticker in tickers:
     stock_data = yf.download(ticker, start=start_date, end=end_date) ['Close']
     data_frames,append(stock_data)
     
